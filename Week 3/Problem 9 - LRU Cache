@@ -1,0 +1,90 @@
+class Node {
+    public:
+    int key;
+    int value;
+    Node *next;
+    Node *prev;
+};
+
+class DoublyLinkedList {
+    int capacity;
+    int size;
+    Node* head;
+    Node* tail;
+
+  public:
+    DoublyLinkedList(int cap) {
+        capacity = cap;
+        size = 0;
+        head = new Node;
+        tail = new Node;
+        head->prev = nullptr;
+        head->next = tail;
+        tail->next = nullptr;
+        tail->prev = head;
+    }
+
+    // Returns the node that was removed because of this being
+    // inserted
+    Node* insert(Node* n) {
+        n->next = head->next;
+        n->prev = head;
+        head->next->prev = n;
+        head->next = n;
+        size++;
+        if (size > capacity) {
+            Node* last = tail->prev;
+            remove(last);
+            return last;
+        }
+        return nullptr;
+    }
+
+    void remove(Node* n) {
+        Node* prev = n->prev;
+        Node* next = n->next;
+        prev->next = next;
+        next->prev = prev;
+        size--;
+    }
+
+    void moveToFront(Node* n) {
+        remove(n);
+        insert(n);
+    }
+};
+
+class LRUCache {
+    DoublyLinkedList* dlList;
+    unordered_map<int, Node*> mp;
+public:
+    LRUCache(int capacity) {
+        int size = capacity;
+        dlList = new DoublyLinkedList(capacity);
+    }
+    
+    int get(int key) {
+        if (!mp.contains(key))
+            return -1;
+        Node* n = mp[key];
+        dlList->moveToFront(n);
+        return n->value;
+    }
+    
+    void put(int key, int value) {
+        if (mp.contains(key)) {
+            Node* n = mp[key];
+            n->value = value;
+            dlList->moveToFront(n);
+            return;
+        }
+        Node* n = new Node;
+        n->value = value;
+        n->key = key;
+        mp[key] = n;
+        Node* removed = dlList->insert(n);
+        if (removed) {
+            mp.erase(removed->key);
+        }
+    }
+};
