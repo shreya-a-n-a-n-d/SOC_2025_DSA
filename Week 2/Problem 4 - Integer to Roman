@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string intToRoman(int num) {
+        string rom;
+        int t = 1000;
+        unordered_map<int, string> mp = {{1, "I"}, {5, "V"}, {10, "X"}, {50, "L"}, {100, "C"}, {500, "D"}, {1000, "M"}};
+        while(num>0) {
+            int n = num/t;
+            if(n==4 || n==9) {
+                rom+=mp[t];
+                rom+=mp[(n+1)*t];
+            }
+            else if(n>=5) {
+                rom+=mp[5*t];
+                for(int i=0; i<n-5; i++) {
+                    rom+=mp[t];
+                }
+            }
+            else {
+                for(int i=0; i<n; i++)
+                    rom+=mp[t];
+            }
+            num=num-n*t;
+            t=t/10;
+        }
+        return rom;
+    }
+};
