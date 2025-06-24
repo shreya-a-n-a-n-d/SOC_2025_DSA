@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode* curr = head;
+        vector<int> copy;
+        int size;
+        if(!head || !head->next) {
+            return true;
+        }
+        while (curr) {
+            copy.push_back(curr->val);
+            curr = curr->next;
+            size++;
+        }
+        curr = head;
+        for(int i=size-1; i>(size/2 - 1); i--) {
+            if(copy[i]!=curr->val)
+                return false;
+            curr = curr->next;
+        }
+        return true;
+    }
+
+};
