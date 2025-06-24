@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        string str;
+        vector<string> a(numRows);
+        int row, incr;
+        row = 0;
+        incr = 1;
+        if(numRows==1)
+            return s;
+        for(int i=0; i<s.size(); i++) {
+            a[row]+=s[i];
+            if(row==0)
+                incr=1;
+            if(row==numRows-1)
+                incr=-1;
+            row+=incr;
+        }
+        for(int j=0; j<a.size(); j++) {
+            str+=a[j];
+        }
+        return str;
+    }
+};
