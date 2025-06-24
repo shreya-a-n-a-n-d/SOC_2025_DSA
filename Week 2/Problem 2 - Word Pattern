@@ -1,0 +1,38 @@
+vector<string> Words(string s) {
+    vector<string> words;
+    int start = 0;
+    for(int i=0; i<s.size();i++) {
+        if(s[i] == ' ') {
+            string sub = s.substr(start, i-start);
+            words.push_back(sub);
+            start = i+1;
+        }
+    }
+    string sub = s.substr(start, s.size()-start);
+    words.push_back(sub);
+    return words; 
+}
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        unordered_map <char, string> m;
+        unordered_map <string, char> m1;
+        if(Words(s).size()!=pattern.size()) {
+            return false;
+        }
+        for(int i=0; i<pattern.size(); i++) {
+            char c = pattern[i];
+            if(m.count(c) == 0) {
+                if(m1.count(Words(s)[i])==0) {
+                    m[c] = Words(s)[i];
+                    m1[Words(s)[i]] = c;
+                }
+                else
+                    return false;
+            }
+            else if(m[c] != Words(s)[i])
+                return false;
+        }
+        return true;
+    }
+};
