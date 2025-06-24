@@ -1,0 +1,45 @@
+class node {
+    public:
+        char c;
+        int freq;
+};
+class Compare {
+public:
+	bool operator()(node a, node b) {
+		if(a.freq<b.freq) {
+			return true;
+		}
+		return false;
+	}
+};
+class Solution {
+public:
+    string frequencySort(string s) {
+        priority_queue<node, vector<node>, Compare> pq;
+        map<char, int> m;
+        for(int i=0; i<s.size(); i++) {
+            auto it = m.find(s[i]);
+            if(it != m.end()) {
+                m.at(s[i])++;
+            }
+            else {
+                m.insert({s[i], 1});
+            }
+        }
+        for (auto i : m) {
+            node n;
+            n.c = i.first;
+            n.freq = i.second;
+            pq.push(n);
+        }
+        string s1;
+        while(!pq.empty()) {
+            for(int j=0; j<pq.top().freq; j++) {
+                char ch = pq.top().c;
+                s1 += ch;
+            }
+            pq.pop();
+        }
+        return s1;
+    }
+};
