@@ -13,3 +13,4 @@ In this week, I covered time and space complexity from both video lectures and t
 Here, I covered linked lists in the same manner as mentioned above and did 9 practice problems on Leetcode on the same.
 
 ## Week 4 
+In week 4, I learnt recursion and back-tracking and did 8 Leetcode practice problems on the same.
