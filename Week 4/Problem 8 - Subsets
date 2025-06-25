@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        return generateSubsets(nums);
+    }
+    vector<vector<int>> generateSubsets(vector<int> nums) {
+        vector<vector<int>> result;
+        if (nums.size() == 0) {
+            vector<int> empty;
+            result.push_back(empty);
+            return result;
+        }
+        int last = nums.back();
+        nums.pop_back();
+        vector<vector<int>> temp = generateSubsets(nums);
+        for (auto v : temp) {
+            result.push_back(v);
+            v.push_back(last);
+            result.push_back(v);
+        }
+        return result;
+    }
+};
