@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        return findCombinations(candidates, target);   
+    }
+
+    vector<vector<int>> findCombinations(vector<int> candidates, int target) {
+        vector<vector<int>> result;
+        int last = candidates.back();
+        if (candidates.size() == 1) {
+            if (target % last == 0) {
+                vector<int> v;
+                for (int i = 0; i < target/last; ++i) {
+                    v.push_back(last);
+                }
+                result.push_back(v);
+            }
+            return result;
+        }
+        int count = target/last;
+        candidates.pop_back();
+        for (int i = 0; i <= count; ++i) {
+            vector<vector<int>> temp = findCombinations(candidates, target - i*last);
+            for (auto v : temp) {
+                vector<int> newV = v;
+                for (int j = 0; j < i; ++j) {
+                    newV.push_back(last);
+                }
+                result.push_back(newV);
+            }
+        }
+        return result;
+    }
+};
