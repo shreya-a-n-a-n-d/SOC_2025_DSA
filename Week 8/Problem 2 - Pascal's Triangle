@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> pascal(int numRows, vector<vector<int>>& dp) {
+        if (numRows == 1) {
+            dp[0].push_back(1);
+            return dp;
+        }
+        if (!dp[numRows - 1].empty())
+            return dp;
+        dp = pascal(numRows - 1, dp);
+        dp[numRows - 1].push_back(1);
+        for (int i = 1; i < numRows - 1; i++) {
+            dp[numRows - 1].push_back(dp[numRows - 2][i - 1] + dp[numRows - 2][i]);
+        }
+        dp[numRows - 1].push_back(1);
+        return dp;
+    }
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> dp(numRows);
+        return pascal(numRows, dp);
+    }
+};
