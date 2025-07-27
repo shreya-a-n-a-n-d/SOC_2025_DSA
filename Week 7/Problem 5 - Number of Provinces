@@ -1,0 +1,37 @@
+class Solution {
+public:
+    unordered_map<int, vector<int>> adj;
+    void addEdge(int u, int v) {
+        if(u==v) {
+            return;
+        }
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+        return;
+    }
+    void dfs(int node, vector<bool>& visited) {
+        visited[node] = true;
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, visited);
+            }
+        }
+    }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        vector<bool> visited(isConnected.size(), false);
+        for(int i=0; i<isConnected.size(); i++) {
+            for(int j=0; j<isConnected.size(); j++) {
+                if(isConnected[i][j])
+                    addEdge(i,j);
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < isConnected.size(); i++) {
+            if (!visited[i]) {
+                count++;
+                dfs(i, visited);
+            }
+        }
+        return count;
+    }
+};
