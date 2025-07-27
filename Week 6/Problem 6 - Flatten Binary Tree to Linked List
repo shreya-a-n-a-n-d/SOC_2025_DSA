@@ -1,0 +1,22 @@
+TreeNode* preorder(TreeNode* node, TreeNode* listptr) {
+    if (node == nullptr)
+         return listptr;
+    TreeNode* left = node->left;
+    TreeNode* right = node->right;
+    node->left = nullptr;
+    node->right = nullptr;
+    if (listptr == nullptr) {
+        listptr = node;
+    } else {
+        listptr->right = node;
+        listptr = listptr->right;
+    }
+    listptr = preorder(left, listptr);
+    return preorder(right, listptr);
+}
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        preorder(root, nullptr);
+    }
+};
