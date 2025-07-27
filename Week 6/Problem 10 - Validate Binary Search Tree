@@ -1,0 +1,45 @@
+int minmax (TreeNode*root, bool b) {
+    if(!root->right) {
+        if(!root->left)
+            return root->val;
+        else if(b==1)
+            return(min(root->val, minmax(root->left, b)));
+        else if(b==0)
+            return(max(root->val, minmax(root->left, b)));
+    }
+    if(!root->left) {
+        if(b==1)
+            return(min(root->val, minmax(root->right, b)));
+        else 
+            return(max(root->val, minmax(root->right, b)));
+    }
+    if (b==1)
+        return(min(minmax(root->left, b), minmax(root->right, b)));
+    else
+        return(max(minmax(root->left, b), minmax(root->right, b)));
+}
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if(!root)
+            return true;
+        if(!root->right) {
+            if(!root->left)
+                return true;
+            if(minmax(root->left, 0) < root->val)
+                return(isValidBST(root->left));
+            else
+                return false;
+        }
+        if(!root->left) {
+            if(minmax(root->right, 1) > root->val)
+                return isValidBST(root->right);
+            else
+                return false;
+        }
+        else if(minmax(root->right, 1) > root->val && minmax(root->left, 0) < root->val)
+            return(isValidBST(root->left) && isValidBST(root->right));
+        else
+            return false;
+    }
+};
