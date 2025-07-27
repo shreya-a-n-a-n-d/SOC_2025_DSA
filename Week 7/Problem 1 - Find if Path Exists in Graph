@@ -1,0 +1,28 @@
+class Solution {
+public:
+    unordered_map<int, vector<int>> adj;
+    vector<bool> vec;
+    void addEdge (int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    bool dfs(int a, int destination) {
+        if (a == destination)
+            return true;
+        vec[a] = true;
+        for (int neighbor : adj[a]) {
+            if (!vec[neighbor]) {
+                if (dfs(neighbor, destination))
+                    return true;
+            }
+        }
+        return false;
+    }
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        vec = vector<bool>(n, 0);
+        for(int i= 0; i<edges.size(); i++) {
+            addEdge(edges[i][0], edges[i][1]);
+        }
+        return dfs(source, destination);
+    }
+};
