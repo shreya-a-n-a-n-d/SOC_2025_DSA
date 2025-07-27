@@ -1,0 +1,27 @@
+void L(vector<TreeNode*> nodes, vector<vector<int>>& L1) {
+    if(nodes.empty())
+        return;
+    vector<TreeNode*> children;
+    vector<int> currentLevel;
+    for (auto node : nodes) {
+        currentLevel.push_back(node->val);
+        if(node->left)
+            children.push_back(node->left);
+        if(node->right)
+            children.push_back(node->right);
+    }
+    L1.push_back(currentLevel);
+    L(children, L1);
+}
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        vector<TreeNode*> nodes;
+        if(root == nullptr)
+            return ans;
+        nodes.push_back(root);
+        L(nodes, ans);
+        return ans;
+    }
+};
