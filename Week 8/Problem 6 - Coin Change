@@ -1,0 +1,40 @@
+// class Solution {
+// public:
+//     int coin(vector<int>& coins, int amount, vector<int>& dp) {
+//         if (amount < 0)
+//             return -1;
+//         if (amount == 0)
+//             return 0;
+//         if(dp[amount] != -1)
+//             return dp[amount];
+//         int min = amount + 1;
+//         for(int i = 0; i<coins.size(); i++) {
+//             int a = coin(coins, amount - coins[i], dp);
+//             if(a >= 0 && a < min)
+//                 min = a + 1;
+//         }
+//         if (min > amount)
+//             dp[amount] = -1;
+//         else
+//             dp[amount] = min;
+//         return dp[amount];
+//     }
+//     int coinChange(vector<int>& coins, int amount) {
+//         vector<int> dp(amount+1, -1);
+//         return coin(coins, amount, dp);
+//     }
+// };
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount + 1, amount + 1);
+        dp[0] = 0;
+        for (int i = 1; i<=amount; i++) {
+            for (int j = 0; j<coins.size(); j++) {
+                if (i >= coins[j])
+                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+            }
+        }
+        return dp[amount]>amount ? -1 : dp[amount];
+    }
+};
