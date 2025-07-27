@@ -1,0 +1,14 @@
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        long long a = 0;
+        long long b = p->val - root->val;
+        long long c = q->val - root->val;
+        if(b*c <= a)
+            return root;
+        else if (p->val - root->val < 0)
+            return lowestCommonAncestor(root->left, p, q);
+        else
+            return lowestCommonAncestor(root->right, p, q);
+    }
+};
