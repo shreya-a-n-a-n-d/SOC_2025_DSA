@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        vector<int> sorted;
+        int i = 0;
+        while(i<nums.size() && nums[i]<0) 
+            i++;
+        int j = i-1;
+        while(true) {
+            if(j==-1) {
+                if(i==nums.size()) 
+                    break;
+                else {
+                    sorted.push_back(nums[i]*nums[i]);
+                    i++;
+                }
+            }
+            else if(i==nums.size()) {
+                sorted.push_back(nums[j]*nums[j]);
+                j--;
+            }
+            else if(-1*nums[j]>=nums[i]) {
+                sorted.push_back(nums[i]*nums[i]);
+                i++;
+            }
+            else if(-1*nums[j]<nums[i]) {
+                sorted.push_back(nums[j]*nums[j]);
+                j--;
+            }
+        }
+        return sorted;
+    }
+};
